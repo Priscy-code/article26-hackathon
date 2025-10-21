@@ -16,7 +16,8 @@ declare global {
     currentUser?: User;
   }
 }
-import LoginImage from "../../../public/login image.jpeg"
+
+
 
 const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<"login" | "signup">("login");
@@ -88,47 +89,12 @@ const App: React.FC = () => {
 
               {/* Features */}
               <div className="space-y-6">
+               
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">
-                      Real-time Tracking
-                    </h3>
-                    <p className="text-red-100 text-sm">
-                      Monitor your work hours and project time instantly
-                    </p>
-                  </div>
+                  
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <BarChart3 className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">
-                      Analytics Dashboard
-                    </h3>
-                    <p className="text-red-100 text-sm">
-                      Get insights into your productivity patterns
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Users className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1">
-                      Team Collaboration
-                    </h3>
-                    <p className="text-red-100 text-sm">
-                      Work seamlessly with your team members
-                    </p>
-                  </div>
-                </div>
+               
               </div>
             </div>
 
@@ -138,7 +104,7 @@ const App: React.FC = () => {
                 and powerful!"
               </p>
               <p className="text-white font-semibold mt-2">
-                — Sarah Chen, Project Manager
+                — Jessica Peace, Project Manager
               </p>
             </div>
           </div>
