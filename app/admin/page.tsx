@@ -126,8 +126,8 @@ export default function Home() {
       <Toast ref={toast} />
 
       <Header
-        title="Article 26 Hackathon Setup"
-        subtitle="Manage your team members and participants"
+        title="ZeitFlow"
+        subtitle="Where time and productivity flow together."
         showAddButton={true}
         onAddClick={handleAddUser}
       />

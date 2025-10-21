@@ -73,6 +73,17 @@ export default function UserDashboard(): JSX.Element {
       color: "red",
       onClick: () => router.push("/ArbZG"),
     },
+    {
+      id: "taskmode",
+      title: "Task Management Mode",
+      description:
+        "Monitor compliance with German Working Time Law regulations",
+      icon: <Shield className="w-8 h-8" />,
+      action: "View Compliance",
+      stats: "All compliant",
+      color: "red",
+      onClick: () => router.push("/task-mode"),
+    },
   ];
 
   const handleNavigate = (featureId: string): void => {

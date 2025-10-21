@@ -2,8 +2,17 @@
 import Link from "next/link";
 import { FC } from "react";
 import { Shield, User, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 
 const Home: FC = () => {
+  const router = useRouter();
+  const handleAdminClick = () => {
+    router.push("/admin");
+  }
+  const handleUserClick = () => {
+    router.push("/auth/signup");
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-red-50 to-gray-50 flex items-center justify-center p-6">
       <div className="max-w-5xl w-full">
@@ -25,7 +34,7 @@ const Home: FC = () => {
             </svg>
           </div>
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Welcome to <span className="text-red-600">ZitaFlow</span>
+            Welcome to <span className="text-red-600">ZeitFlow</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Choose your role to access the portal and start managing your time
@@ -105,14 +114,14 @@ const Home: FC = () => {
                 {/* Button */}
                 <div className="flex items-center text-red-600 font-semibold group-hover:text-red-700">
                   Access Admin Portal
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" onClick={handleAdminClick} />
                 </div>
               </div>
             </div>
           </Link>
 
           {/* User Card */}
-          <Link href="/user">
+          <Link href="/auth/signup">
             <div className="group relative bg-white rounded-3xl p-8 shadow-xl border-2 border-gray-100 hover:border-red-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer overflow-hidden">
               {/* Background Gradient Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-red-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -181,7 +190,7 @@ const Home: FC = () => {
                 {/* Button */}
                 <div className="flex items-center text-red-600 font-semibold group-hover:text-red-700">
                   Access User Portal
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" onClick={handleUserClick} />
                 </div>
               </div>
             </div>
@@ -196,7 +205,7 @@ const Home: FC = () => {
               href="mailto:support@zitaflow.com"
               className="text-red-600 hover:text-red-700 font-medium"
             >
-              support@zitaflow.com
+              support@zeitflow.com
             </a>
           </p>
         </div>

@@ -120,13 +120,20 @@ export default function VacationBooking(): JSX.Element {
     if (startDate && endDate) {
       const dateErrors = validateDates(startDate, endDate, vacationType);
       validationErrors.push(...dateErrors);
+
+      // Check if user has enough vacation days left
+      const requestedDays = calculateDays(startDate, endDate, vacationType);
+      if (totalVacationDays + requestedDays > 30) {
+        validationErrors.push(
+          `Not enough vacation days. You have ${vacationDaysLeft} days remaining, but requesting ${requestedDays} days.`
+        );
+      }
     }
 
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
       return;
     }
-
     const totalDays = calculateDays(startDate, endDate, vacationType);
     const newVacation: Vacation = {
       id: Date.now(),
