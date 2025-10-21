@@ -120,7 +120,7 @@ export default function Home() {
         <Button
           label="Book Time"
           icon="pi pi-clock"
-          onClick={() => router.push(`/book-time?userId=${user.id}`)}
+          onClick={() => router.push(`/admin-bookingtime?userId=${user.id}`)}
           className="w-full mt-4"
           style={{
             backgroundColor: "var(--brand-color)",
