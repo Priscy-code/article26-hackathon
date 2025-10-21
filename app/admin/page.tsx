@@ -136,8 +136,8 @@ export default function Home() {
       <Toast ref={toast} />
 
       <Header
-        title="ZeitFlow"
-        subtitle="Hello Admin"
+        title="Hello Admin"
+        subtitle="Welcome back to your dashboard"
         showAddButton={true}
         onAddClick={handleAddUser}
       />
