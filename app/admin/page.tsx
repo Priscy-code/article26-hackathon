@@ -137,7 +137,7 @@ export default function Home() {
 
       <Header
         title="ZeitFlow"
-        subtitle="Where time and productivity flow together."
+        subtitle="Hello Admin"
         showAddButton={true}
         onAddClick={handleAddUser}
       />

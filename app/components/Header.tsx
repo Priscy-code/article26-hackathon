@@ -56,7 +56,7 @@ export default function Header({
 
           {/* Right Section: Buttons */}
           <div className="flex flex-wrap justify-center md:justify-end gap-3">
-            <Link href="/api-doc">
+            {/* <Link href="/api-doc">
               <Button
                 label="API Docs"
                 icon="pi pi-book"
@@ -67,7 +67,7 @@ export default function Header({
                 }}
                 className="hover:bg-gray-50 transition-colors w-full sm:w-auto"
               />
-            </Link>
+            </Link> */}
 
             {showAddButton && onAddClick && (
               <Button
