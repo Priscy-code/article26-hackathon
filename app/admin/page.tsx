@@ -71,7 +71,7 @@ export default function Home() {
           <div
             className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center text-white font-bold text-lg"
             style={{
-              background: `linear-gradient(135deg, var(--brand-color), rgb(165, 16, 37))`,
+              background: `linear-gradient(135deg, var(--brand-color), rgba(191, 39, 59, 1))`,
             }}
           >
             {user.name.charAt(0).toUpperCase()}
@@ -117,6 +117,16 @@ export default function Home() {
             </span>
           </div>
         </div>
+        <Button
+          label="Book Time"
+          icon="pi pi-clock"
+          onClick={() => router.push(`/book-time?userId=${user.id}`)}
+          className="w-full mt-4"
+          style={{
+            backgroundColor: "var(--brand-color)",
+            borderColor: "var(--brand-color)",
+          }}
+        />
       </Card>
     );
   };
