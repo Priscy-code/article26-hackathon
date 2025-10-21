@@ -3,11 +3,15 @@ require('dotenv').config({ path: '.env.local' });
 
 // Create connection pool directly in the seed file
 const connectionPool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DATABASE,
-  password: process.env.POSTGRES_PASSWORD,
+  // connectionString: process.env.POSTGRES_URL,
+  // user: process.env.POSTGRES_USER,
+  // host: process.env.POSTGRES_HOST,
+  // database: process.env.POSTGRES_DB,
+  // password: process.env.POSTGRES_PASSWORD,
+  user: 'postgres',
+  host: '127.0.0.1',
+  database: 'postgres',
+  password: 'example',
   port: 5432,
 });
 

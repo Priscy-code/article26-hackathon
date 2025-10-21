@@ -1,160 +1,225 @@
-'use client';
+"use client";
+import Link from "next/link";
+import { FC } from "react";
+import { Shield, User, ArrowRight } from "lucide-react";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card } from 'primereact/card';
-import { Button } from 'primereact/button';
-import { Badge } from 'primereact/badge';
-import { Toast } from 'primereact/toast';
-import { useRef } from 'react';
-import Header from './components/Header';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  department: string;
-  created_at: string;
-}
-
-export default function Home() {
-  const router = useRouter();
-  const toast = useRef<Toast>(null);
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch('/api/users');
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(data.users);
-      } else {
-        toast.current?.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to fetch users',
-        });
-      }
-    } catch (error) {
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Network error occurred',
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAddUser = () => {
-    router.push('/add-user');
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
-
-  const UserCard = ({ user }: { user: User }) => {
-    const cardHeader = (
-      <div className="flex justify-between items-start mb-3">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center text-white font-bold text-lg" style={{background: `linear-gradient(135deg, var(--brand-color), rgb(165, 16, 37))`}}>
-            {user.name.charAt(0).toUpperCase()}
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 m-0">{user.name}</h3>
-            <p className="text-sm text-gray-600 m-0">{user.email}</p>
-          </div>
-        </div>
-      </div>
-    );
-
-    return (
-      <Card className="shadow-md hover:shadow-lg transition-shadow duration-200 h-full">
-        {cardHeader}
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-gray-700">Role:</span>
-            <Badge 
-              value={user.role.charAt(0).toUpperCase() + user.role.slice(1)} 
-              severity={((role: string) => {
-                // Using a settled grey color for all role badges
-                return 'secondary';
-              })(user.role) as any}
-            />
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-gray-700">Department:</span>
-            <span className="text-sm text-gray-900 capitalize">{user.department}</span>
-          </div>
-          <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-            <span className="text-xs text-gray-500">Added:</span>
-            <span className="text-xs text-gray-500">{formatDate(user.created_at)}</span>
-          </div>
-        </div>
-      </Card>
-    );
-  };
-
+const Home: FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Toast ref={toast} />
-      
-      <Header 
-        title="Article 26 Hackathon Setup"
-        subtitle="Manage your team members and participants"
-        showAddButton={true}
-        onAddClick={handleAddUser}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-red-50 to-gray-50 flex items-center justify-center p-6">
+      <div className="max-w-5xl w-full">
+        {/* Header Section */}
+        <div className="text-center mb-16 animate-fadeIn">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-600 to-red-700 rounded-2xl shadow-xl mb-6">
+            <svg
+              className="w-10 h-10 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+              />
+            </svg>
+          </div>
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            Welcome to <span className="text-red-600">ZitaFlow</span>
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Choose your role to access the portal and start managing your time
+            efficiently
+          </p>
+        </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {loading ? (
-          <div className="flex justify-center items-center py-16">
-            <i className="pi pi-spinner pi-spin text-4xl" style={{color: 'var(--brand-color)'}}></i>
-          </div>
-        ) : users.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="mb-4">
-              <i className="pi pi-users text-6xl text-gray-400"></i>
+        {/* Cards Section */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Admin Card */}
+          <Link href="/admin">
+            <div className="group relative bg-white rounded-3xl p-8 shadow-xl border-2 border-gray-100 hover:border-red-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer overflow-hidden">
+              {/* Background Gradient Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-red-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-2xl mb-6 group-hover:bg-red-200 transition-colors">
+                  <Shield className="w-8 h-8 text-red-600" />
+                </div>
+
+                {/* Content */}
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                  Admin Portal
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Access administrative controls, manage users, view analytics,
+                  and configure system settings
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-sm text-gray-600">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    User Management
+                  </li>
+                  <li className="flex items-center text-sm text-gray-600">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Analytics Dashboard
+                  </li>
+                  <li className="flex items-center text-sm text-gray-600">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    System Configuration
+                  </li>
+                </ul>
+
+                {/* Button */}
+                <div className="flex items-center text-red-600 font-semibold group-hover:text-red-700">
+                  Access Admin Portal
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">No users found</h3>
-            <p className="text-gray-500 mb-6">Get started by adding your first team member</p>
-            <Button
-              label="Add First User"
-              icon="pi pi-plus"
-              onClick={handleAddUser}
-              style={{backgroundColor: 'var(--brand-color)', borderColor: 'var(--brand-color)'}}
-              className="hover:opacity-90 transition-opacity"
-            />
-          </div>
-        ) : (
-          <>
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">
-                Team Members ({users.length})
-              </h2>
-              <p className="text-gray-600">Overview of all registered participants</p>
+          </Link>
+
+          {/* User Card */}
+          <Link href="/user">
+            <div className="group relative bg-white rounded-3xl p-8 shadow-xl border-2 border-gray-100 hover:border-red-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer overflow-hidden">
+              {/* Background Gradient Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-red-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-2xl mb-6 group-hover:bg-blue-200 transition-colors">
+                  <User className="w-8 h-8 text-blue-600" />
+                </div>
+
+                {/* Content */}
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                  User Portal
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Track your time, manage tasks, view your schedule, and access
+                  your personal dashboard
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-sm text-gray-600">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Time Tracking
+                  </li>
+                  <li className="flex items-center text-sm text-gray-600">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Task Management
+                  </li>
+                  <li className="flex items-center text-sm text-gray-600">
+                    <svg
+                      className="w-5 h-5 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Personal Dashboard
+                  </li>
+                </ul>
+
+                {/* Button */}
+                <div className="flex items-center text-red-600 font-semibold group-hover:text-red-700">
+                  Access User Portal
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" />
+                </div>
+              </div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {users.map((user) => (
-                <UserCard key={user.id} user={user} />
-              ))}
-            </div>
-          </>
-        )}
+          </Link>
+        </div>
+
+        {/* Footer Info */}
+        <div className="text-center">
+          <p className="text-gray-500 text-sm">
+            Need help? Contact{" "}
+            <a
+              href="mailto:support@zitaflow.com"
+              className="text-red-600 hover:text-red-700 font-medium"
+            >
+              support@zitaflow.com
+            </a>
+          </p>
+        </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.8s ease-out;
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default Home;
